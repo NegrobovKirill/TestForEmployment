@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EnterNumberFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="153dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tVEnterNumberTitle"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:text="@string/title_auth"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tVEEnterNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/stolzl_book"
+            android:text="@string/auth_enter_phone_number"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tVEnterNumberTitle" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_til"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:boxCornerRadiusBottomEnd="18dp"
+            app:boxCornerRadiusBottomStart="18dp"
+            app:boxCornerRadiusTopEnd="18dp"
+            app:boxCornerRadiusTopStart="18dp"
+            app:boxStrokeColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_edt"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/ic_edit"
+                android:digits="0123456789 -.+()"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/stolzl_regular"
+                android:inputType="phone"
+                android:padding="0dp"
+                android:paddingTop="0dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/middle_gray_blue"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp"
+                tools:ignore="SpeakableTextPresentCheck">
+
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

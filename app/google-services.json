@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998755419954",
+    "project_id": "auth-phone-f0dfb",
+    "storage_bucket": "auth-phone-f0dfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998755419954:android:2898ad43466e6a2386792b",
+        "android_client_info": {
+          "package_name": "com.example.logisthelperNegrobov"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd5OzDpmqj8vlKLH_nynWN1_j5y5lQFl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

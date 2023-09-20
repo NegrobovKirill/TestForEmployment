@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">LogistHelper</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_splash_fragment">Splash fragment</string>
+    <string name="logo_desc">Помощник логиста</string>
+    <string name="title_auth">Добро пожаловать в БИА.Помощник логиста</string>
+    <string name="auth_enter_phone_number">Введите свой номер для авторизации</string>
+    <string name="button_next">Продолжить</string>
+    <string name="enter_key_from_sms">Введите код из смс</string>
+    <string name="send_to_phone">Код был отправлен на номер телефона</string>
+    <string name="key_message">Выслать повторный код</string>
+    <string name="task_fragment">Задания</string>
+    <string name="grafics_fragment">Графики</string>
+    <string name="chat_fragment">Чат</string>
+    <string name="profile_fragment">Профиль</string>
+    <string name="watch_details">Посмотреть детали</string>
+    <string name="current_task">Текущее задание</string>
+    <string name="task_details_title">"Детали заказа"</string>
+    <string name="orders_parametrs_title">Параметры по оплате</string>
+    <string name="task_succsess_title">Работа выполнена</string>
+    <string name="details_title">Детали задания</string>
+</resources>

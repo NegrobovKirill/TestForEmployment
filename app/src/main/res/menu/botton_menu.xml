@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/taskFragment"
+        android:fontFamily="@font/stolzl_regular"
+        android:title="@string/task_fragment"
+        android:orderInCategory="1"
+        android:icon="@drawable/task"
+        />
+    <item
+        android:id="@+id/graficsFragment"
+        android:fontFamily="@font/stolzl_regular"
+        android:title="@string/grafics_fragment"
+        android:orderInCategory="2"
+        android:icon="@drawable/grafics"
+        />
+    <item
+        android:id="@+id/chatFragment"
+        android:fontFamily="@font/stolzl_regular"
+        android:title="@string/chat_fragment"
+        android:orderInCategory="3"
+        android:icon="@drawable/chat"
+        />
+    <item
+        android:id="@+id/profileFragment"
+        android:fontFamily="@font/stolzl_regular"
+        android:title="@string/profile_fragment"
+        android:orderInCategory="4"
+        android:icon="@drawable/profile"
+        />
+
+
+</menu>
