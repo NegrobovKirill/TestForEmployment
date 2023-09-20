@@ -1,15 +1,22 @@
-package com.example.logisthelperNegrobov.fragments.bottom_menu_fragments
+package com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.task_fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.logisthelperNegrobov.R
 import com.example.logisthelperNegrobov.databinding.FragmentTaskBinding
+import com.example.logisthelperNegrobov.domain.models.Task
 
-class TaskFragment : Fragment() {
+class TaskFragment : Fragment() , RecyclerViewInterface {
+
+    private lateinit var navController: NavController
+
+    private val taskViewModel: TaskViewModel by activityViewModels()
 
     private lateinit var binding: FragmentTaskBinding
     private lateinit var adapter: TaskAdapter
@@ -58,7 +65,20 @@ class TaskFragment : Fragment() {
         adapter = TaskAdapter(requireContext())
         binding.rcViewTasks.layoutManager = LinearLayoutManager(requireContext())
         binding.rcViewTasks.adapter = adapter
+        adapter.setOnItemClickListener(object : RecyclerViewInterface {
+            //Implement
 
+            override fun onClick(position: Int) {
+                taskViewModel.selectedTask.value = tasksList[position]
+
+                parentFragmentManager.beginTransaction().replace(R.id.mainFragmentHolder,
+                    TaskDetailsFragment()
+                ).commit()
+
+
+            }
+
+        })
         adapter.submitList(tasksList)
 
     }
@@ -68,6 +88,10 @@ class TaskFragment : Fragment() {
         @JvmStatic
         fun newInstance() =
             TaskFragment()
+    }
+
+    override fun onClick(position: Int) {
+
     }
 
 }

@@ -1,14 +1,12 @@
-package com.example.logisthelperNegrobov.fragments
+package com.example.logisthelperNegrobov.presentation.fragments.auth_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.example.logisthelperNegrobov.databinding.FragmentEnterNumberBinding
-import com.google.android.material.internal.ViewUtils.showKeyboard
+import com.example.logisthelperNegrobov.presentation.fragments.BaseFragment
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 
@@ -44,7 +42,7 @@ class EnterNumberFragment : BaseFragment()  {
     private fun initLoginMask(){
         MaskedTextChangedListener.installOn(
             binding.loginEdt,
-            EnterNumberFragment.PHONE_MASK,
+            PHONE_MASK,
             object : MaskedTextChangedListener.ValueListener {
 
                 override fun onTextChanged(

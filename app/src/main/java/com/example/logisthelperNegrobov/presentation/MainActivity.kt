@@ -1,7 +1,8 @@
-package com.example.logisthelperNegrobov
+package com.example.logisthelperNegrobov.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.logisthelperNegrobov.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -10,4 +11,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
     }
+
 }

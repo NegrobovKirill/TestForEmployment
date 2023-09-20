@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.EnterKeyFragment">
+    tools:context=".presentation.fragments.auth_fragment.EnterKeyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -111,18 +111,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tVSentNewCode"
-            android:layout_width="0dp"
-            android:layout_height="17dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/stolzl_book"
-            android:gravity="center"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

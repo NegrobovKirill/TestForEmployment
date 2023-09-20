@@ -1,4 +1,4 @@
-package com.example.logisthelperNegrobov.fragments.bottom_menu_fragments
+package com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.logisthelperNegrobov.R
 
-class GraficsFragment : Fragment() {
+
+class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -19,13 +19,13 @@ class GraficsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_grafics, container, false)
+        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     companion object {
 
         @JvmStatic
         fun newInstance() =
-            GraficsFragment()
+            ProfileFragment()
     }
 }

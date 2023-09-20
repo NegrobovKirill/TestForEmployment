@@ -1,30 +1,35 @@
-package com.example.logisthelperNegrobov.fragments.bottom_menu_fragments
+package com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.task_fragment
 
 import android.content.Context
-import android.content.Intent
-import android.media.RouteListingPreference.Item
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.logisthelperNegrobov.R
 import com.example.logisthelperNegrobov.databinding.ItemTaskBinding
-import java.io.Serializable
+import com.example.logisthelperNegrobov.domain.models.Task
 
 class TaskAdapter(contextM: Context): ListAdapter<Task, TaskAdapter.TaskHolder>(Comparator()) {
 
-
+    private lateinit var mListener : RecyclerViewInterface
     var context = contextM
 
-    class TaskHolder(item: View, contextv: Context):RecyclerView.ViewHolder(item){
+    fun setOnItemClickListener(listener: RecyclerViewInterface){
+        mListener = listener
+    }
+
+    class TaskHolder(item: View, listener: RecyclerViewInterface):RecyclerView.ViewHolder(item){
         private lateinit var taskViewModel: TaskViewModel
         val binding = ItemTaskBinding.bind(item)
-        val context = contextv
+
+        init {
+            binding.button.setOnClickListener {
+                listener.onClick(adapterPosition)
+            }
+        }
+
         fun bind(task: Task) = with(binding){
             tvTaskTitle.text =task.typeGroze
             if (task.currentTask){
@@ -46,13 +51,8 @@ class TaskAdapter(contextM: Context): ListAdapter<Task, TaskAdapter.TaskHolder>(
                 cardTaskSuccsess.visibility = View.GONE
                 tvTaskDetails.text = task.taskDetails
                 tvOrdersParametrs.text = task.orderParametrs
-                button.setOnClickListener {
-                    val activity = context as AppCompatActivity
-                    //taskViewModel.selectedTask.value = task
-                    activity.supportFragmentManager.beginTransaction().replace(R.id.taskDetailsFragment,TaskDetailsFragment()).addToBackStack(null).commit()
-                }
-            }
 
+            }
         }
     }
 
@@ -69,7 +69,7 @@ class TaskAdapter(contextM: Context): ListAdapter<Task, TaskAdapter.TaskHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task,parent,false)
-        return TaskHolder(view, context)
+        return TaskHolder(view,mListener)
     }
 
 

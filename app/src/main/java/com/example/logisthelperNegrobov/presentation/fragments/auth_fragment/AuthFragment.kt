@@ -1,8 +1,9 @@
-package com.example.logisthelperNegrobov.fragments
+package com.example.logisthelperNegrobov.presentation.fragments.auth_fragment
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,24 +15,23 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.example.logisthelperNegrobov.R
 import com.example.logisthelperNegrobov.databinding.FragmentAuthBinding
+import com.example.logisthelperNegrobov.presentation.fragments.BaseFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
 
 class AuthFragment : BaseFragment()  {
 
 
-
+    private var timer: CountDownTimer? = null
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
-   private lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     lateinit var stateVerificationId: String
 
@@ -42,11 +42,130 @@ class AuthFragment : BaseFragment()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAuthBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //var currentUser = auth.currentUser
+
+        openFrag(EnterNumberFragment.newInstance(), R.id.placeHolder)
+
+        authFragmentViewModel.currentAuthFragment.value = "EnterNumberFragment"
+
+        authFragmentViewModel.fullPhoneNumber.observe(activity as LifecycleOwner) {
+            setButtonColors(it)
+        }
+
+        authFragmentViewModel.currentAuthFragment.observe(activity as LifecycleOwner){
+            if(it == "EnterNumberFragment")
+            {
+                binding.tVSentNewCode.visibility = View.GONE
+            }else
+            {
+                binding.tVSentNewCode.visibility = View.VISIBLE
+            }
+        }
+
+        binding.bAuth.setOnClickListener {
+            if (authFragmentViewModel.currentAuthFragment.value == "EnterKeyFragment"){
+                val code = authFragmentViewModel.enteredKey.value
+                val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId, code!!)
+                signInWithPhoneAuthCredential(credentialAuth)
+                setButtonColors(false)
+                fromAuthToMain()
+            }else {
+
+                openFrag(EnterKeyFragment.newInstance(), R.id.placeHolder)
+                authFragmentViewModel.currentAuthFragment.value = "EnterKeyFragment"
+
+                binding.tVSentNewCode.visibility = View.VISIBLE
+
+                setButtonColors(false)
+                sendVerificationCode()
+                KeyMessege()
+            }
+
+
+        }
+
+        authFragmentViewModel.newAuthLink.observe(activity as LifecycleOwner){
+            if (it){
+                binding.tVSentNewCode.setOnClickListener {
+                    if (binding.tVSentNewCode.isClickable){
+                        sendVerificationCode()
+                        KeyMessege()
+
+                    }
+                }
+            }
+        }
+
+        authFragmentViewModel.enteredKey.observe(activity as LifecycleOwner) {
+            if (authFragmentViewModel.enterFullKey.value!!){
+                setButtonColors(true)
+            }else
+            {
+                setButtonColors(false)
+            }
+        }
+    }
+
+    private fun KeyMessege() {
+
+        isNewError(false)
+        val message: String = getString(R.string.key_message)
+        timer?.cancel()
+        timer = object : CountDownTimer(60000, 1000) {
+            override fun onTick(p0: Long) {
+
+                val newMessage = if (p0 > 10000){
+                    message + " (00:" + p0.toString().substring(0,2) + ")"
+                }else if(p0 in 1000..10000){
+                    message + " (00:0" + p0.toString().substring(0,1) + ")"
+                }else {
+                    message + " (00:00)"
+                }
+
+                binding.tVSentNewCode.text = newMessage
+            }
+
+            override fun onFinish() {
+                isNewError(true)
+                binding.tVSentNewCode.text = message
+
+
+            }
+
+        }.start()
+
+    }
+
+    private fun isNewError(boolean: Boolean){
+        authFragmentViewModel.newAuthLink.value = boolean
+        if (boolean){
+            binding.tVSentNewCode.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            binding.tVSentNewCode.setTextColor(Color.parseColor("#F0303F"))
+            binding.tVSentNewCode.isClickable = true
+        }else
+        {
+            binding.tVSentNewCode.paintFlags = 0
+            binding.tVSentNewCode.setTextColor(Color.parseColor("#B8C4DB"))
+            binding.tVSentNewCode.isClickable = false
+        }
+    }
+
+    fun sendVerificationCode() {
         auth = FirebaseAuth.getInstance()
-
-
-        var currentUser = auth.currentUser
-
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             // On code is sent by the firebase this method is called
@@ -70,62 +189,7 @@ class AuthFragment : BaseFragment()  {
                 Log.d("GFG" , "onVerificationFailed  $e")
             }
 
-
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAuthBinding.inflate(inflater,container,false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
-        openFrag(EnterNumberFragment.newInstance(), R.id.placeHolder)
-        authFragmentViewModel.currentAuthFragment.value = "EnterNumberFragment"
-
-
-        authFragmentViewModel.fullPhoneNumber.observe(activity as LifecycleOwner) {
-            setButtonColors(it)
-        }
-
-        binding.bAuth.setOnClickListener {
-            if (authFragmentViewModel.currentAuthFragment.value == "EnterKeyFragment"){
-//                val code = authFragmentViewModel.enteredKey.value
-//                val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId, code!!)
-//                signInWithPhoneAuthCredential(credentialAuth)
-                setButtonColors(false)
-                fromAuthToMain()
-            }else {
-
-                openFrag(EnterKeyFragment.newInstance(), R.id.placeHolder)
-                authFragmentViewModel.currentAuthFragment.value = "EnterKeyFragment"
-                setButtonColors(false)
-                //sendVerificationCode()
-            }
-
-
-        }
-
-
-
-        authFragmentViewModel.enteredKey.observe(activity as LifecycleOwner) {
-            if (authFragmentViewModel.enterFullKey.value!!){
-                setButtonColors(true)
-            }else
-            {
-                setButtonColors(false)
-            }
-        }
-    }
-
-    private fun sendVerificationCode() {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(authFragmentViewModel.currentPhoneNumber.value!!) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit

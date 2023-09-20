@@ -1,4 +1,4 @@
-package com.example.logisthelperNegrobov.fragments
+package com.example.logisthelperNegrobov.presentation.fragments
 
 import android.os.Bundle
 import android.os.Handler

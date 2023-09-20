@@ -1,19 +1,17 @@
-package com.example.logisthelperNegrobov.fragments
+package com.example.logisthelperNegrobov.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.logisthelperNegrobov.R
 import com.example.logisthelperNegrobov.databinding.FragmentMainBinding
-import com.example.logisthelperNegrobov.fragments.bottom_menu_fragments.ChatFragment
-import com.example.logisthelperNegrobov.fragments.bottom_menu_fragments.GraficsFragment
-import com.example.logisthelperNegrobov.fragments.bottom_menu_fragments.ProfileFragment
-import com.example.logisthelperNegrobov.fragments.bottom_menu_fragments.TaskFragment
+import com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.ChatFragment
+import com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.GraficsFragment
+import com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.ProfileFragment
+import com.example.logisthelperNegrobov.presentation.fragments.bottom_menu_fragments.task_fragment.TaskFragment
 
 
 class MainFragment : Fragment() {

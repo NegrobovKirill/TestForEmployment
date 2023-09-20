@@ -1,4 +1,4 @@
-package com.example.logisthelperNegrobov.fragments.bottom_menu_fragments
+package com.example.logisthelperNegrobov.domain.models
 
 data class Task(
     val taskId: Int,

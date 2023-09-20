@@ -1,4 +1,4 @@
-package com.example.logisthelperNegrobov.fragments
+package com.example.logisthelperNegrobov.presentation.fragments.auth_fragment
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
