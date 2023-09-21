@@ -22,6 +22,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 
@@ -40,6 +44,7 @@ class AuthFragment : BaseFragment()  {
     private var text: String = ""
     private var boolean: Boolean = true
 
+    private var codeSendMessage: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,10 +84,13 @@ class AuthFragment : BaseFragment()  {
         binding.bAuth.setOnClickListener {
             if (authFragmentViewModel.currentAuthFragment.value == "EnterKeyFragment"){
                 val code = authFragmentViewModel.enteredKey.value
-                val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId, code!!)
-                signInWithPhoneAuthCredential(credentialAuth)
-                setButtonColors(false)
-                fromAuthToMain()
+                if(codeSendMessage == "codeSendSuccess"){
+                    val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId, code!!)
+                    signInWithPhoneAuthCredential(credentialAuth)
+                    setButtonColors(false)
+                    fromAuthToMain()
+                }
+
             }else {
 
                 openFrag(EnterKeyFragment.newInstance(), R.id.placeHolder)
@@ -92,7 +100,7 @@ class AuthFragment : BaseFragment()  {
 
                 setButtonColors(false)
                 sendVerificationCode()
-                KeyMessege()
+
             }
 
 
@@ -102,8 +110,9 @@ class AuthFragment : BaseFragment()  {
             if (it){
                 binding.tVSentNewCode.setOnClickListener {
                     if (binding.tVSentNewCode.isClickable){
+
                         sendVerificationCode()
-                        KeyMessege()
+
 
                     }
                 }
@@ -164,7 +173,7 @@ class AuthFragment : BaseFragment()  {
         }
     }
 
-    fun sendVerificationCode() {
+fun sendVerificationCode() {
         auth = FirebaseAuth.getInstance()
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -175,6 +184,7 @@ class AuthFragment : BaseFragment()  {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
                 Log.d("GFG", "onCodeSent: $verificationId")
+                codeSendMessage = "codeSendSuccess"
                 stateVerificationId = verificationId
                 resendToken = token
             }
@@ -197,6 +207,7 @@ class AuthFragment : BaseFragment()  {
             .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
+        KeyMessege()
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
