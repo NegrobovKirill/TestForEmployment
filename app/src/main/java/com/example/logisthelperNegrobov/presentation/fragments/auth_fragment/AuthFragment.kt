@@ -37,14 +37,18 @@ class AuthFragment : BaseFragment()  {
 
     private lateinit var auth: FirebaseAuth
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-    lateinit var stateVerificationId: String
+    var stateVerificationId: String? = null
+
+
 
     private val authFragmentViewModel: AuthFragmentViewModel by activityViewModels()
     private lateinit var binding: FragmentAuthBinding
     private var text: String = ""
     private var boolean: Boolean = true
 
+
     private var codeSendMessage: String? = null
+    private var authSuccessMessage: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,13 +86,16 @@ class AuthFragment : BaseFragment()  {
         }
 
         binding.bAuth.setOnClickListener {
-            if (authFragmentViewModel.currentAuthFragment.value == "EnterKeyFragment"){
+            if (authFragmentViewModel.currentAuthFragment.value == "EnterKeyFragment") {
                 val code = authFragmentViewModel.enteredKey.value
-                if(codeSendMessage == "codeSendSuccess"){
-                    val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId, code!!)
+                if (codeSendMessage == "codeSendSuccess") {
+
+                    val credentialAuth = PhoneAuthProvider.getCredential(stateVerificationId!!, code!!)
                     signInWithPhoneAuthCredential(credentialAuth)
-                    setButtonColors(false)
-                    fromAuthToMain()
+
+//                        setButtonColors(false)
+//                        fromAuthToMain()
+
                 }
 
             }else {
@@ -216,7 +223,8 @@ fun sendVerificationCode() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
-
+                    setButtonColors(false)
+                    fromAuthToMain()
                     val user = task.result?.user
 
                 } else {
